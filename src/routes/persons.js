@@ -4,7 +4,9 @@ const {
   getPersonById,
   deletePersonById,
   updatePersonById,
-  createPerson
+  createPerson,
+  updateAccountSchema,
+  createAccountSchema
 } = require('../controllers')
 
 const routes = new Router()
@@ -13,9 +15,9 @@ routes.get('/', getAllPersons)
 
 routes.get('/:id', getPersonById)
 
-routes.post('/', createPerson)
+routes.post('/', createAccountSchema, createPerson)
 
-routes.put('/:id', updatePersonById)
+routes.put('/:id', updateAccountSchema, updatePersonById)
 
 routes.delete('/:id', deletePersonById)
 
