@@ -1,24 +1,27 @@
 const { Router } = require('express')
 const {
   getAllPersons,
-  getPersonById,
   deletePersonById,
   updatePersonById,
   createPerson,
-  updateAccountSchema,
-  createAccountSchema
+  getPersonById
 } = require('../controllers')
+const schemaValidator = require('../middlewares/schemaValidator')
+const withAuth = require('../middlewares/withAuth')
+const { createPersonSchema, updatePersonSchema } = require('../validations/personSchema')
 
 const routes = new Router()
 
-routes.get('/', getAllPersons)
+routes.get('/', withAuth, getAllPersons)
 
-routes.get('/:id', getPersonById)
+routes.get('/:id', withAuth, getPersonById)
 
-routes.post('/', createAccountSchema, createPerson)
+routes.post('/', withAuth, schemaValidator(createPersonSchema), createPerson)
 
-routes.put('/:id', updateAccountSchema, updatePersonById)
+routes.put('/:id', withAuth, schemaValidator(updatePersonSchema), updatePersonById)
 
-routes.delete('/:id', deletePersonById)
+// routes.get('/:firstName', withAuth, getPersonByName)
+
+routes.delete('/:id', withAuth, deletePersonById)
 
 module.exports = routes

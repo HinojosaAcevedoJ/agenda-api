@@ -1,11 +1,11 @@
 const supabase = require('../../core/supabase')
 
-const updateById = async (req, res) => {
+const myInfo = async (_req, res) => {
   const { decodedToken } = res.locals
   const { data, error } = await supabase
-    .from('person')
-    .update(req.body)
-    .match({ id: req.params.id, owner_id: decodedToken.sub })
+    .from('user')
+    .select()
+    .eq('id', decodedToken.sub)
   if (error) {
     res.status(500).send({ message: error.message })
     return
@@ -13,4 +13,4 @@ const updateById = async (req, res) => {
   res.send(data[0])
 }
 
-module.exports = updateById
+module.exports = myInfo
