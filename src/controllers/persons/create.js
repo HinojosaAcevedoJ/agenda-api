@@ -9,6 +9,7 @@ const create = async (req, res) => {
     )
   if (error) {
     res.status(500).send({ message: error.message })
+    console.log(error)
     return
   }
   res.send(data[0])
