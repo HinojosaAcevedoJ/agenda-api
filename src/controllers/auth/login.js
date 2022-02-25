@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const supabase = require('../../core/supabase')
 
+const JWT_SECRET = process.env.JWT_SECRET
+
 const login = async (req, res) => {
   const { data, error } = await supabase
     .from('user')
@@ -18,7 +20,7 @@ const login = async (req, res) => {
     res.status(401).send({ message: 'Invalid Credentials' })
     return
   }
-  const token = jwt.sign({ sub: item.id }, 'secret', { expiresIn: '7d' })
+  const token = jwt.sign({ sub: item.id }, JWT_SECRET, { expiresIn: '7d' })
   res.send({ token })
 }
 

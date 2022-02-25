@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken')
 
+const JWT_SECRET = process.env.JWT_SECRET
+
 async function withAuth(req, res, next) {
   const token = req.headers.authorization
   const splittedToken = token?.split(' ')
@@ -8,7 +10,7 @@ async function withAuth(req, res, next) {
     return
   }
   try {
-    const decoded = jwt.verify(splittedToken[1], 'secret')
+    const decoded = jwt.verify(splittedToken[1], JWT_SECRET)
     res.locals.decodedToken = decoded
     await next()
   } catch (err) {
