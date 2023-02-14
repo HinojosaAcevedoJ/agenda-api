@@ -13,11 +13,11 @@ const login = async (req, res) => {
   const item = data[0]
   const isCorrect = await bcrypt.compare(req.body.password || '', item?.password || '')
   if (error) {
-    res.status(500).send({ message: error.message })
+    res.status(500).json({ message: error.message })
     return
   }
   if (!isCorrect) {
-    res.status(401).send({ message: 'Invalid Credentials' })
+    res.status(401).json({ message: 'Invalid Credentials'})
     return
   }
   const token = jwt.sign({ sub: item.id }, JWT_SECRET, { expiresIn: '7d' })

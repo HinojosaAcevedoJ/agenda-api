@@ -7,7 +7,7 @@ const myInfo = async (_req, res) => {
     .select()
     .eq('id', decodedToken.sub)
   if (error) {
-    res.status(500).send({ message: error.message })
+    res.status(500).json({ message: error.message })
     return
   }
   res.send(data[0])

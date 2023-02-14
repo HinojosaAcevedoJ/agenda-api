@@ -9,7 +9,7 @@ const changePassword = async (req, res) => {
     .update({ password: hashed })
     .eq('email', req.body.email)
   if (error) {
-    res.status(500).send({ message: error.message })
+    res.status(500).json({ message: error.message })
     return
   }
   res.send(data[0])
